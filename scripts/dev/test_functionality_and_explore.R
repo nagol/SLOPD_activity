@@ -20,6 +20,7 @@ slopd_data <- load_and_preprocess_data(
     url = "https://raw.githubusercontent.com/nagol/SLOPD_data/main/data/csv/SLOPD_report.csv")
 
 
+
 # Transient ----
 transient_data <- filter_by_search(
     slopd_data, 

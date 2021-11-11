@@ -5,7 +5,7 @@ load_and_preprocess_data <- function(url){
             date = mdy(date), 
             weekday = wday(date, label = TRUE), 
             month = month(date),
-            type = str_to_upper(type)) 
+            type = str_to_upper(type))
 }
 
 

@@ -1,9 +1,6 @@
-
 # Libraries ----
 library(shiny)
 library(shinyWidgets)
-library(shinyjs)
-
 library(tidyverse)
 library(lubridate)
 library(devtools)
@@ -11,6 +8,7 @@ library(usethis)
 library(ggplot2)
 library(here)
 library(DT)
+
 
 # load functions
 source(here('scripts/functions/load_and_preprocess_data.R'))
@@ -24,19 +22,23 @@ source(here('scripts/functions/create_time_series_plot.R'))
 slopd_data <- load_and_preprocess_data(
   url = "https://raw.githubusercontent.com/nagol/SLOPD_data/main/data/csv/SLOPD_report.csv")
 
-
 # UI ----
 ui <- fluidPage(
-    title = "San Luis Obispo Police Department - Call Log Explorer",
+  
+    tags$head(
+      tags$link(rel = "stylesheet", type = "text/css", href = "styles.css")
+    ),
     
+    title = "San Luis Obispo Police Department - Call Log Explorer",
+  
     div(
-      class = "container",
       id = "header",
       class = "page-header",
-      h1("SLOPD Police Call Explorer"),
+      class = "container",
+      h1("SLOPD Call Log Explorer"),
       p(
         class = "lead",
-        "A Citizen Created, Unofficial Data Exploration Tool"
+        "An Unofficial Data Exploration Tool"
       ),
       p(
         "The San Luis Obispo Police department publishes detailed records about
@@ -45,24 +47,34 @@ ui <- fluidPage(
          historical data."
       ),
       p("There are many insights one can gain by seeing for oneself
-         the struggles of their local community. Even in a small, sleepy town
-         like San Luis Obispo crime, disagreements, accidents, and emergencies
-         are a daily part of life. The news only shows the most sensational and 
-         outrageous. So, what is really going on around SLO?")
+         the struggles of their local community. Even a small, sleepy town
+         like San Luis Obispo experiences daily disagreements, accidents, criminal acts, 
+         and emergencies are a daily part of human life. The police are often the 
+         first line of contact for many in times of distress and as such,
+         police incident records provide a unique, raw vantage point of the 
+         happenings in the community."), 
+      p("What is really going on around SLO?")
     ),
   
     
     # main body ----
     div(
-      class = "panel-body",
+
+        class = "panel-body",
+        
         # Sidebar
         column(
             width = 4, 
+            
+            p(em("Customize your search using the filters below.")),
+            
             wellPanel(
+              
+              div(
                 
                 # type picker input ----
                 pickerInput(inputId = "type_select_input", 
-                            label = "Type", 
+                            label = "Incident Type", 
                             choices = slopd_data %>% 
                               select(type) %>%
                               arrange(type) %>%
@@ -76,6 +88,8 @@ ui <- fluidPage(
                             options = list(`actions-box` = TRUE),
                             width = NULL, 
                             inline = FALSE),
+                
+                br(),
                 
                 # date airDatepicker input ----
                 airDatepickerInput(
@@ -98,7 +112,7 @@ ui <- fluidPage(
                     minView = c("days", "months", "years"),
                     monthsField = c("monthsShort", "months"),
                     clearButton = TRUE,
-                    todayButton = TRUE,
+                    todayButton = FALSE,
                     autoClose = FALSE,
                     timepickerOpts = timepickerOptions(),
                     position = NULL,
@@ -109,43 +123,31 @@ ui <- fluidPage(
                     onlyTimepicker = FALSE,
                     width = NULL,
                     toggleSelected = TRUE),
-        
-                # # search input location ----
-                # searchInput(
-                #     inputId = "location_search_input",
-                #     label = "Location Search",
-                #     value = "",
-                #     placeholder = "Enter Address to Search",
-                #     btnSearch = icon("search"),
-                #     btnReset = icon("remove"),
-                #     resetValue = "",
-                #     width = NULL
-                # ),
+                
+                
+                br(),
                 
                 # search input call comments ----
                 searchInput(
                     inputId = "call_search_input",
                     label = "Call Comments Search",
                     value = "",
-                    placeholder = "Enter Search Terms (ie. TRANSIENT)",
+                    placeholder = "Enter Search (ex. yell|scream)",
                     btnSearch = icon("search"),
-                    btnReset = icon("remove"),
+                    btnReset = icon("trash"),
                     resetValue = "",
-                    width = NULL
+                    width = '100%'
+                    
                 )
-                # ,
-                # actionButton(
-                #   inputId = "search_button",
-                #   label = "Analyze Selection",
-                #   icon = icon("play")
-                # )
-                )),
-        
+              )
+            )
+          ),
         
         # plots ----
         column(
           width = 8,
           div(
+              #class = "panel",
               tabsetPanel(
                 tabPanel("Time-Series Plot", plotOutput(outputId = "time_plot")),
                 tabPanel("Frequency Plot", plotOutput(outputId = "freq_plot"))
@@ -156,6 +158,7 @@ ui <- fluidPage(
     
     # data ----
     div(
+        class = "panel",
         column(
             width = 12,
             div(
@@ -211,8 +214,8 @@ server <- function(input, output) {
         count_by_type(type_list = NULL) %>%
         create_frequency_plot(
           type, 
-          title = "Blah",
-          subtitle = "Blah")
+          title = "",
+          subtitle = "")
     } else {
       
     }
@@ -226,30 +229,30 @@ server <- function(input, output) {
              address, type, call_comments,
              responsible_officer, units, description,
              clearance_code) %>%
+    arrange(desc(case_number)) %>%
     datatable(options = list(
       deferRender = TRUE,
       scrollY = 400,
       scrollX = TRUE,
       scroller = TRUE,
       autoWidth = TRUE,
-      columnDefs = list(list(width = '10%', targets = c(1,2,3,4)))
-    ))  # %>% formatStyle(columns = c(2,3), width='20px')
+      columnDefs = list(list(width = '10%', targets = c(1,2,3,4,5,6,7,8,9,10,11)))
+    ))  
     
   })
   
-
   output$debug <- renderText({
 
-   print("Type Selected:")
-   print(input$type_select_input) 
-   print("Dates Selected:")
-   print(input$date_select_input)
-   print(input$date_select_input[1])
-   print(input$date_select_input[2])
-   print(str(input$date_select_input))
-   print(length(input$date_select_input))
-   print("Call Search:")
-   print(input$call_search_input)
+    print("Type Selected:")
+    print(input$type_select_input) 
+    print("Dates Selected:")
+    print(input$date_select_input)
+    print(input$date_select_input[1])
+    print(input$date_select_input[2])
+    print(str(input$date_select_input))
+    print(length(input$date_select_input))
+    print("Call Search:")
+    print(input$call_search_input)
    
   })
 }
