@@ -8,8 +8,8 @@ create_frequency_plot <- function(data, count_col, title, subtitle, x_label = ''
         labs(
             x = x_label, 
             y = "Count",
-            title = title,
-            subtitle = subtitle,
+            # title = title,
+            # subtitle = subtitle,
             caption = str_glue("Total records found: {sum(data$n)}")) +
         theme_minimal() +
         theme(plot.title = element_text(size = rel(1.5), face="bold", vjust=1)) +
