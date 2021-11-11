@@ -11,13 +11,13 @@ library(DT)
 
 
 # load functions
-source(here('scripts/functions/load_and_preprocess_data.R'))
-source(here('scripts/functions/filter_by_search.R'))
-source(here('scripts/functions/filter_by_date.R'))
-source(here('scripts/functions/count_by_date.R'))
-source(here('scripts/functions/count_by_type.R'))
-source(here('scripts/functions/create_frequency_plot.R'))
-source(here('scripts/functions/create_time_series_plot.R'))
+source('../scripts/functions/load_and_preprocess_data.R')
+source('../scripts/functions/filter_by_search.R')
+source('../scripts/functions/filter_by_date.R')
+source('../scripts/functions/count_by_date.R')
+source('../scripts/functions/count_by_type.R')
+source('../scripts/functions/create_frequency_plot.R')
+source('../scripts/functions/create_time_series_plot.R')
 
 slopd_data <- load_and_preprocess_data(
   url = "https://raw.githubusercontent.com/nagol/SLOPD_data/main/data/csv/SLOPD_report.csv")
