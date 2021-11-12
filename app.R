@@ -20,7 +20,8 @@ source('functions/create_frequency_plot.R')
 source('functions/create_time_series_plot.R')
 
 slopd_data <- load_and_preprocess_data(
-  url = "https://raw.githubusercontent.com/nagol/SLOPD_data/main/data/csv/SLOPD_report.csv")
+  url = "https://raw.githubusercontent.com/nagol/SLOPD_data/main/data/csv/SLOPD_report.csv") %>%
+  distinct()
 
 # UI ----
 ui <- fluidPage(
@@ -183,13 +184,12 @@ ui <- fluidPage(
 server <- function(input, output) {
   
   data <- reactive({
-    filtered_data <- slopd_data %>%
+    slopd_data %>%
       filter(type %in% input$type_select_input) %>%
       filter_by_date(input$date_select_input) %>%
       filter_by_search(
         search_pattern = input$call_search_input, 
         search_column = call_comments)
-    filtered_data
   })
   
   output$time_plot <- renderPlot({
