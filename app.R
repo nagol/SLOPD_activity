@@ -42,7 +42,7 @@ ui <- fluidPage(
         "An Unofficial Data Exploration Tool"
       ),
       p(
-        "The San Luis Obispo Police department publishes detailed records about
+        "The San Luis Obispo Police Department publishes detailed records about
          interactions with the public. This tool is designed to make investigation
          of these data a little easier as well as providing a little context with
          historical data."
@@ -50,11 +50,19 @@ ui <- fluidPage(
       p("There are many insights one can gain by seeing for oneself
          the struggles of their local community. Even a small, sleepy town
          like San Luis Obispo experiences daily disagreements, accidents, criminal acts, 
-         and emergencies are a daily part of human life. The police are often the 
-         first line of contact for many in times of distress and as such,
+         and emergencies. These are a daily part of human life. The police are often the 
+         first line of contact for many in times of distress/conflict and as such,
          police incident records provide a unique, raw vantage point of the 
          happenings in the community."), 
-      p("What is really going on around SLO?")
+      p("What is really going on around SLO?"),
+      h5("Data Sources"),
+      tags$a(
+        href="https://github.com/nagol/SLOPD_data", 
+        "Data Collecting Python Routine Code - https://github.com/nagol/SLOPD_data"),
+      br(),
+      tags$a(
+        href="https://github.com/nagol/SLOPD_activity", 
+        "Code for this Dashboard - https://github.com/nagol/SLOPD_activity"),
     ),
   
     
