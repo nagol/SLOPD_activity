@@ -9,7 +9,7 @@ In particular, for finding patterns of various types of behavior/incidents.
 
 ## Data Source
 
-The data source is available at [here]('https://github.com/nagol/SLOPD_data'). The data is updated Monday-Thursday afternoon.
+The data source is available at [here](https://github.com/nagol/SLOPD_data). The data is updated Monday-Thursday afternoon.
 
 ## How to Use
 
