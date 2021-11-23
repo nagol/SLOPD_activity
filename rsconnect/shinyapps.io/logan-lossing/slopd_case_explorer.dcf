@@ -5,7 +5,7 @@ account: logan-lossing
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 5106320
-bundleId: 5242392
+bundleId: 5286516
 url: https://logan-lossing.shinyapps.io/slopd_case_explorer/
-when: 1636673226.64046
-lastSyncTime: 1636673226.64047
+when: 1637705068.58472
+lastSyncTime: 1637705068.58473
