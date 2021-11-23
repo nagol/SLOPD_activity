@@ -23,6 +23,9 @@ slopd_data <- load_and_preprocess_data(
   url = "https://raw.githubusercontent.com/nagol/SLOPD_data/main/data/csv/SLOPD_report.csv") %>%
   distinct()
 
+# edit incomplete date information out of plot
+most_current_date <- max(slopd_data$date)
+
 # UI ----
 ui <- fluidPage(
   
@@ -104,7 +107,7 @@ ui <- fluidPage(
                 airDatepickerInput(
                     inputId = "date_select_input",
                     label = "Date (select range)",
-                    value = list(min(slopd_data$date), max(slopd_data$date)),
+                    value = list(min(slopd_data$date), max(slopd_data$date+1)),
                     multiple = FALSE,
                     range = TRUE,
                     timepicker = FALSE,
@@ -205,6 +208,7 @@ server <- function(input, output) {
     if (NROW(data()) > 0) {
       
       data() %>%
+        filter(date <= as.POSIXct(ymd(most_current_date))) %>%
         count_by_date() %>%
         create_time_series_plot(
           title = "Showing", 
