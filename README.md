@@ -5,7 +5,7 @@ In particular, for finding patterns of various types of behavior/incidents.
 
 ## Interactive Dashboard 
 
-[https://logan-lossing.shinyapps.io/slopd_case_explorer/](https://logan-lossing.shinyapps.io/slopd_case_explorer/)
+[https://logan-lossing.shinyapps.io/slopd_activity/](https://logan-lossing.shinyapps.io/slopd_activity/)
 
 ## Data Source
 
