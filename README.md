@@ -25,16 +25,46 @@ San Luis Obispo is home to a university not unfamiliar with partying. How many c
 
 #### By Call Comments Search
 
-Consider words that often might be associated with a complaint about a loud party. Words like *noise*, *loud music*, and *party* should be good indicators.
+Consider words that often might be associated with a complaint about a loud party. Words like *noise*, *loud*, and *party* should be good indicators.
 
-Let's try the search phrase `noise|loud music|party`
+Let's try the search phrase `noise|loud|party`
 
-*Insert search result*
 
-*Insert data results*
+![](screenshot/initial_search.png)
+
+Looks like we have found many results. Are these the results we really want?
+
+We can probe further by looking at the raw data and the `type` breakdown plot.
+
+Note, the search functionality in the table can be used to find specific calls
+within the data without changing the result set. This can be very handy to quickly
+investigate anomalies in the result set.
+
+![](screenshot/initial_data_result.png)
 
 #### By Type
 
 What were the labels applied by SLOPD to these calls? That is where this plot shines. In this example, these call `type` labels all seem appropriate and related but this is not always the case. 
 
+![](screenshot/initial_type_breakdown.png)
+
+In this `type` breakdown, there are many categories that I do not think are related
+to what we are looking for. Use the `type` selector to unselect the offending records.
+
+![](screenshot/deselect_types.png)
+
+#### Results
+
+Finally, we have filtered for just the records we were looking for. Now that
+we know what a reasonable filter is, further analysis can be done on remaining
+fields such as time-of-day and location information.
+
+![](screenshot/final_data_result.png)
+
+![](screenshot/final_type_breakdown.png)
+
+In the final time-series plot, we see clear evidence of weekly seasonality.
+Party related noise complaints peak on Friday and Saturday.
+
+![](screenshot/final_time_series.png)
 
