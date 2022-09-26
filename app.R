@@ -208,7 +208,7 @@ server <- function(input, output) {
     if (NROW(data()) > 0) {
       
       data() %>%
-        filter(date <= as.POSIXct(ymd(most_current_date))) %>%
+        filter(date < as.POSIXct(ymd(most_current_date))) %>%
         count_by_date() %>%
         create_time_series_plot(
           title = "Showing", 

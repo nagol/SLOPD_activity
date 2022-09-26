@@ -1,7 +1,8 @@
 create_time_series_plot <- function(data, title = '', subtitle = '', show_trend = TRUE){
     
-   
+    max_date <- max(data$date)
     plot <- data %>%
+        filter(date != max_date) %>%
         mutate(dow = wday(date, label = TRUE)) %>%
         ggplot(aes(x = date, y = n)) +
         geom_line() +
